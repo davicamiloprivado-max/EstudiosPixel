@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pixel Estúdio | Portfólio</title>
+<!-- Ícone da Aba do Navegador (Favicon) -->
+<link rel="icon" type="image/png" href="logoaba.png">
 <link href="https://googleapis.com" rel="stylesheet">
 <style>
 /* Resets básicos e comportamento global de rolagem fluida e lenta */
@@ -77,13 +79,26 @@ transition: color 0.3s ease;
 color: #ffffff;
 }
 
-/* 1. Banner Principal */
+/* Número de Telefone no Canto Direito da Navbar (Apenas PC) */
+.navbar-phone {
+position: absolute;
+right: 4%;
+top: 50%;
+transform: translateY(-50%);
+color: #ffffff;
+font-size: 0.9rem;
+font-weight: 500;
+letter-spacing: 0.5px;
+}
+
+/* 1. Banner Principal (Configuração Original Restaurada para PC) */
 .header-banner {
 height: 85vh;
 display: flex;
 flex-direction: column;
 justify-content: flex-end;
 align-items: center;
+background: url('banner.jpg') no-repeat center center;
 background-size: cover;
 text-align: center;
 position: relative;
@@ -468,24 +483,18 @@ border-top: 1px solid #222;
 color: #555;
 }
 
-/* REGRAS EXCLUSIVAS PARA COMPUTADORES (TELAS GRANDES) */
-@media (min-width: 769px) {
-  .header-banner {
-    background: url('banner.jpg') no-repeat center center;
-  }
-}
-
 /* AJUSTES DE RESPONSIVIDADE PARA CELULARES */
 @media (max-width: 768px) {
 body { padding-top: 60px; }
 .navbar { height: 60px; padding: 0 10px; }
 .navbar-logo { display: none; }
-.navbar-menu { gap: 10px; width: 100%; justify-content: center; }
-.navbar-item a { font-size: 0.7rem; }
+.navbar-phone { display: none; } /* Oculta número de texto puro no topo do celular */
+.navbar-menu { gap: 12px; width: 100%; justify-content: center; }
+.navbar-item a { font-size: 0.75rem; }
 .header-banner {
 height: 60vh;
-background: url('banner.mobile.jpg') no-repeat center center;
-background-size: cover;
+background: url('banner.mobile.jpg') no-repeat center center !important;
+background-size: cover !important;
 padding-bottom: 60px;
 }
 .about-section { grid-template-columns: 1fr; padding: 60px 5%; gap: 30px; }
@@ -525,6 +534,7 @@ padding-bottom: 60px;
 <li class="navbar-item"><a href="#historia">História da Pixel</a></li>
 <li class="navbar-item"><a href="#precos">Preços</a></li>
 </ul>
+<div class="navbar-phone">+55 (11) 97879-2642</div>
 </nav>
 
 <section class="header-banner">
@@ -584,7 +594,7 @@ padding-bottom: 60px;
 <!-- SEÇÃO 4: A HISTÓRIA DA PIXEL ESTÚDIO -->
 <section class="history-full-section" id="historia">
 <h2>A história da Pixel Estúdio</h2>
-<p>A Pixel veio de um jovem designer chamado Davi Godoy. A ideia surgiu quando Davi estava cursando design gráfico na Bio Artes, onde aprendeu a maior parte da criação de um logotipo. Davi também cursou Design de Marcas no Senai de São Caetano do Sul, mas antes de toda essa experiência com cursos, ele teve a oportunidade de criar thumbnails para vídeos no YouTube, onde obteve suas primeiras vivências com a criação e o marketing de artes para redes sociais.</p>
+<p>A Pixel veio de um jovem designer chamado Davi Godoy. A ideia surgiu quando Davi estava cursando design gráfico na Bio Artes, onde aprendeu a maior parte da criação de um logotipo. Mas antes de toda essa experiência com cursos, ele teve a oportunidade de criar thumbnails para vídeos no YouTube, onde obteve suas primeiras vivências com a criação e o marketing de artes para redes sociais.</p>
 <p style="margin-top: 18px;">Hoje, o Davi, com seus 16 anos, continua tendo a mesma sede de aprender e desenvolver suas habilidades no Design Gráfico.</p>
 </section>
 
@@ -600,9 +610,25 @@ padding-bottom: 60px;
 </section>
 
 
+<!-- 📞 SEÇÃO 6: CONTATO -->
+<section id="contato" style="padding: 80px 5%; text-align: center; background-color: #0a0a0a; border-top: 1px solid rgba(255, 255, 255, 0.03);">
+    <h2 style="font-size: 2rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; color: #f0f0f0;">Entre em Contato</h2>
+    <p style="color: #999; font-size: 1.1rem; margin-bottom: 30px;">Está pronto para dar vida ao seu projeto? Fale comigo agora mesmo!</p>
+    
+    <!-- Botão Interativo do WhatsApp com Mensagem Personalizada -->
+    <a href="https://wa.me" 
+       target="_blank" 
+       style="display: inline-flex; align-items: center; justify-content: center; background-color: #25D366; color: #fff; text-decoration: none; padding: 15px 35px; font-size: 1.1rem; font-weight: 600; border-radius: 50px; box-shadow: 0 10px 20px rgba(37, 211, 102, 0.2); transition: transform 0.3s ease, box-shadow 0.3s ease;">
+       <span style="margin-right: 10px; font-size: 1.3rem;">💬</span> Chamar no WhatsApp
+    </a>
+    
+    <p style="margin-top: 25px; color: #666; font-size: 0.9rem; letter-spacing: 0.5px;">Telefone direto: +55 (11) 97879-2642</p>
+</section>
+
+
 <!-- 🖼 CENTRAL DE LIGHTBOXES -->
 <div id="img1" class="lightbox"><a href="#logotipos" class="close-btn">&times;</a><img src="logo1.jpg" class="lightbox-img" alt="Óticas Oculare"></div>
-<div id="img2" class="lightbox"><a href="#logotipos" class="close-btn">&times;</a><img src="logo2.jpg" class="lightbox-img" alt="Vinysa"></div>
+<div id="img2" class="lightbox"><a href="#logotipos" class="close-btn">&times;</a><img src="logo2.jpg" class="lightbox-img" alt="Vinysa Estúdio de Yoga"></div>
 <div id="img3" class="lightbox"><a href="#logotipos" class="close-btn">&times;</a><img src="logo3.jpg" class="lightbox-img" alt="Logo 3"></div>
 <div id="img4" class="lightbox"><a href="#logotipos" class="close-btn">&times;</a><img src="logo4.jpg" class="lightbox-img" alt="Luciano A. Camilo"></div>
 
@@ -711,24 +737,4 @@ padding-bottom: 60px;
 <div class="lightbox-gallery-wrapper">
 <a href="#art3_c" class="lightbox-arrow l-arrow">&#10094;</a>
 <div class="lightbox-gallery-container">
-<img src="arte3_d.jpg" class="lightbox-img" alt="Arte 3 Suporte 3">
-</div>
-</div>
-</div>
-
-<!-- LIGHTBOX LOGO INSTITUCIONAL -->
-<div id="pix_solo" class="lightbox">
-<a href="#sobre" class="close-btn">&times;</a>
-<div class="lightbox-gallery-wrapper">
-<div class="lightbox-gallery-container">
-<img src="logo_pixel_sobre.png" class="lightbox-img" alt="Logo Pixel Estúdio">
-</div>
-</div>
-</div>
-
-<footer>
-© 2026 Pixel Estúdio - Todos os direitos reservados.
-</footer>
-
-</body>
-</html>
+<img src="arte3_d.jpg"
