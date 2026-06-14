@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pixel Estúdio | Portfólio</title>
+
+<!-- Ícone da Aba do Navegador (Favicon) -->
+<link rel="icon" type="image/png" href="logoaba.png">
+
+<link href="https://googleapis.com" rel="stylesheet">
+<style>
+/* Resets básicos e comportamento global de rolagem fluida e lenta */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body {
+scroll-behavior: smooth;
+}
+body {
+font-family: 'Inter', sans-serif;
+background-color: #050505;
+color: #ffffff;
+overflow-x: hidden;
+padding-top: 70px;
+}
+
+/* Menu de Navegação Superior Fixo (70px) */
+.navbar {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 70px;
+background-color: rgba(5, 5, 5, 0.75);
+backdrop-filter: blur(10px);
+-webkit-backdrop-filter: blur(10px);
+border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+display: flex;
+align-items: center;
+justify-content: space-between; /* Distribui logo na esquerda, menu no centro e fone na direita */
+padding: 0 5%;
+z-index: 1000;
+}
+
+/* Container da Logo ajustado no canto esquerdo */
+.navbar-logo {
+display: flex;
+align-items: center;
+}
+
+.navbar-logo img {
+height: 110px;
+width: auto;
+object-fit: contain;
+display: block;
+mix-blend-mode: screen;
+filter: brightness(0) invert(1);
+}
+
+/* Links centrais do Menu */
+.navbar-menu {
+display: flex;
+list-style: none;
+gap: 30px;
+}
+
+.navbar-item a {
+color: #999;
+text-decoration: none;
+font-size: 0.9rem;
+font-weight: 500;
+text-transform: uppercase;
+letter-spacing: 1px;
+transition: color 0.3s ease;
+}
+
+.navbar-item a:hover {
+color: #ffffff;
+}
+
+/* Número de Telefone no Canto Direito (Apenas para Computador) */
+.navbar-phone {
+display: block;
+}
+
+.navbar-phone a {
+color: #ffffff;
+text-decoration: none;
+font-size: 0.95rem;
+font-weight: 600;
+letter-spacing: 0.5px;
+background: rgba(255, 255, 255, 0.05);
+padding: 8px 16px;
+border-radius: 50px;
+border: 1px solid rgba(255, 255, 255, 0.1);
+transition: background 0.3s ease;
+}
+
+.navbar-phone a:hover {
+background: rgba(255, 255, 255, 0.15);
+}
+
+/* 1. Banner Principal - Restaurado para cobrir naturalmente sem zoom exagerado */
+.header-banner {
+height: 85vh;
+display: flex;
+flex-direction: column;
+justify-content: flex-end;
+align-items: center;
+background: url('banner.jpg') no-repeat center center;
+background-size: cover;
+text-align: center;
+position: relative;
+padding-bottom: 50px;
+}
+
+/* Estilo padrão universal para todas as setas indicadoras de descida */
+.scroll-indicator {
+position: absolute;
+bottom: 25px;
+left: 50%;
+transform: translateX(-50%);
+width: 50px;
+height: 50px;
+background-color: rgba(255, 255, 255, 0.15);
+border: 2px solid rgba(255, 255, 255, 0.4);
+color: #ffffff;
+border-radius: 50%;
+display: flex;
+justify-content: center;
+align-items: center;
+cursor: pointer;
+text-decoration: none;
+font-size: 1.2rem;
+font-weight: bold;
+transition: background-color 0.3s, transform 0.3s, border-color 0.3s;
+animation: pulse-scroll 2.5s infinite ease-in-out;
+z-index: 10;
+}
+
+.scroll-indicator:hover {
+background-color: rgba(255, 255, 255, 0.3);
+border-color: #ffffff;
+}
+
+@keyframes pulse-scroll {
+0%, 100% { transform: translate(-50%, 0); }
+50% { transform: translate(-50%, 8px); }
+}
+
+/* 2. Área do Portfólio (Sliders Horizontais Estilo Netflix) */
+.portfolio-section {
+padding: 80px 0 100px 0;
+background-color: #0a0a0a;
+scroll-margin-top: 70px;
+position: relative;
+}
+
+.section-title {
+text-align: center;
+font-size: 2rem;
+margin-bottom: 10px;
+color: #f0f0f0;
+text-transform: uppercase;
+letter-spacing: 1px;
+}
+
+.section-subtitle {
+text-align: center;
+font-size: 1.05rem;
+font-weight: 400;
+color: #666;
+margin-bottom: 40px;
+letter-spacing: 0.5px;
+}
+
+/* Container do Carrossel com Botões das Setas nas extremidades */
+.carousel-wrapper {
+position: relative;
+width: 100%;
+max-width: 1400px;
+margin: 0 auto;
+display: flex;
+align-items: center;
+padding: 0 40px;
+}
+
+.portfolio-container {
+display: flex;
+overflow-x: auto;
+align-items: center;
+gap: 20px;
+padding: 20px 10px 30px 10px;
+scrollbar-width: none;
+scroll-behavior: smooth;
+width: 100%;
+}
+
+.portfolio-container::-webkit-scrollbar {
+display: none;
+}
+
+/* SETAS ESTILO NETFLIX (Horizontais) */
+.nav-arrow {
+position: absolute;
+top: 50%;
+transform: translateY(-50%);
+width: 45px;
+height: 70px;
+background-color: rgba(0, 0, 0, 0.5);
+border: 1px solid rgba(255, 255, 255, 0.1);
+color: #ffffff;
+font-size: 1.5rem;
+display: flex;
+justify-content: center;
+align-items: center;
+cursor: pointer;
+z-index: 100;
+transition: background-color 0.3s, color 0.3s;
+border-radius: 4px;
+}
+
+.nav-arrow:hover {
+background-color: rgba(255, 255, 255, 0.2);
+color: #ffffff;
+}
+
+.nav-arrow.left-arrow { left: 10px; }
+.nav-arrow.right-arrow { right: 10px; }
+
+/* ABAS RETÂNGULOS VERTICAIS PADRÃO */
+.portfolio-item {
+flex: 0 0 400px;
+height: 550px;
+background-color: #1a1a1a;
+border: 1px solid rgba(255, 255, 255, 0.03);
+border-radius: 20px;
+overflow: hidden;
+display: flex;
+justify-content: center;
+align-items: center;
+transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+cursor: pointer;
+text-decoration: none;
+}
+
+.portfolio-item img {
+width: 100%;
+height: 100%;
+object-fit: cover;
+border-radius: 20px;
+transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+display: block;
+}
+
+/* Zoom na aba inteira ao passar o mouse */
+.portfolio-item:hover {
+transform: translateY(-5px) scale(1.05);
+box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+z-index: 5;
+}
+
+.portfolio-item:hover img {
+transform: scale(1.03);
+}
+
+/* ABAS EXCLUSIVAS DE LOGOTIPO (Mantidas fixas em 400x400) */
+.portfolio-item.brand-square {
+flex: 0 0 400px;
+height: 400px;
+background-color: #0a0a0a;
+border-radius: 20px;
+padding: 15px;
+}
+
+.portfolio-item.brand-square img {
+width: 100%;
+height: 100%;
+object-fit: contain;
+border-radius: 10px;
+}
+
+/* 🖼 ESTRUTURA LIGHTBOX (TELA CHEIA) */
+.lightbox {
+position: fixed;
+top: 0;
+left: 0;
+width: 100vw;
+height: 100vh;
+background-color: rgba(0, 0, 0, 0.95);
+display: none;
+justify-content: center;
+align-items: center;
+z-index: 2000;
+padding: 40px;
+}
+
+.lightbox:target {
+display: flex;
+}
+
+.lightbox-gallery-wrapper {
+position: relative;
+display: flex;
+align-items: center;
+justify-content: center;
+max-width: 90%;
+max-height: 85%;
+z-index: 2001;
+}
+
+.lightbox-gallery-container {
+display: flex;
+overflow: hidden;
+gap: 0px;
+border-radius: 12px;
+box-shadow: 0 20px 50px rgba(0,0,0,0.9);
+}
+
+.lightbox-img {
+height: 75vh;
+width: auto;
+object-fit: contain;
+flex: 0 0 auto;
+display: block;
+}
+
+/* SETAS DE NAVEGAÇÃO INTERNA */
+.lightbox-arrow {
+position: absolute;
+top: 50%;
+transform: translateY(-50%);
+color: rgba(255, 255, 255, 0.6);
+background-color: rgba(0, 0, 0, 0.4);
+font-size: 2.5rem;
+text-decoration: none;
+transition: color 0.3s, background-color 0.3s;
+z-index: 2015;
+width: 50px;
+height: 80px;
+display: flex;
+justify-content: center;
+align-items: center;
+font-weight: bold;
+border-radius: 4px;
+border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.lightbox-arrow:hover {
+color: #ffffff;
+background-color: rgba(0, 0, 0, 0.8);
+}
+
+.lightbox-arrow.l-arrow { left: -65px; }
+.lightbox-arrow.r-arrow { right: -65px; }
+
+/* Marca d'água branca por cima */
+.lightbox::before {
+content: "";
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+width: 40%;
+height: 40%;
+background: url('logo.png') no-repeat center center/contain;
+opacity: 0.12;
+filter: brightness(1) invert(0);
+mix-blend-mode: screen;
+pointer-events: none;
+z-index: 2005;
+}
+
+.close-btn {
+position: absolute;
+top: 30px;
+right: 40px;
+color: #999;
+font-size: 2.5rem;
+text-decoration: none;
+font-weight: 300;
+transition: color 0.3s;
+z-index: 2010;
+}
+
+.close-btn:hover {
+color: #ffffff;
+}
+
+/* Seções Institucionais Padrão (2 Colunas) */
+.about-section {
+padding: 120px 10%;
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 50px;
+align-items: center;
+scroll-margin-top: 70px;
+}
+
+.about-text h2 {
+font-size: 3rem;
+margin-bottom: 20px;
+color: #fff;
+}
+
+.about-text p {
+font-size: 1.25rem;
+line-height: 1.8;
+color: #b3b3b3;
+}
+
+.about-image {
+width: 100%;
+height: 400px;
+background: #111;
+border-radius: 20px;
+overflow: hidden;
+cursor: pointer;
+text-decoration: none;
+transition: transform 0.4s ease, box-shadow 0.4s ease;
+border: 1px solid rgba(255, 255, 255, 0.03);
+}
+
+.about-image:hover {
+transform: scale(1.03);
+box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+}
+
+.about-image img {
+width: 100%;
+height: 100%;
+object-fit: cover;
+}
+
+/* Seção de História em 1 coluna cheia */
+.history-full-section {
+padding: 120px 15%;
+background-color: #0a0a0a;
+border-top: 1px solid rgba(255, 255, 255, 0.03);
+scroll-margin-top: 70px;
+text-align: left;
+}
+
+.history-full-section h2 {
+font-size: 3rem;
+margin-bottom: 25px;
+color: #fff;
+}
+
+.history-full-section p {
+font-size: 1.25rem;
+line-height: 1.9;
+color: #b3b3b3;
+max-width: 1000px;
+}
+
+/* Seção de Preços Inteligente */
+.pricing-section {
+width: 100%;
+padding: 0;
+background-color: #050505;
+border-top: 1px solid rgba(255, 255, 255, 0.03);
+scroll-margin-top: 70px;
+text-align: center;
+}
+
+.pricing-container {
+width: 100%;
+max-width: 100%;
+display: flex;
+justify-content: center;
+}
+
+.pricing-container picture {
+width: 100%;
+display: block;
+}
+
+.pricing-container img {
+width: 100%;
+height: auto;
+max-width: 100%;
+object-fit: contain;
+display: block;
+}
+
+/* Footer */
+footer {
+padding: 50px;
+text-align: center;
+border-top: 1px solid #222;
+color: #555;
+}
+
+/* AJUSTES DE RESPONSIVIDADE PARA CELULARES */
+@media (max-width: 768px) {
+body { padding-top: 60px; }
+.navbar { height: 60px; padding: 0 10px; justify-content: center; }
+.navbar-logo { display: none; }
+.navbar-phone { display: none; } /* Esconde o botão do topo no celular */
+.navbar-menu { gap: 15px; width: 100%; justify-content: center; }
+.navbar-item a { font-size: 0.75rem; }
+.header-banner {
+height: 60vh;
+background: url('banner.mobile.jpg') no-repeat center center;
+background-size: cover;
+padding-bottom: 60px;
+}
+.about-section { grid-template-columns: 1fr; padding: 60px 5%; gap: 30px; }
+.about-text h2 { font-size: 2rem; }
+.about-text p { font-size: 1.05rem; }
+.history-full-section { padding: 60px 5%; scroll-margin-top: 60px; }
+.history-full-section h2 { font-size: 2.2rem; }
+.history-full-section p { font-size: 1.05rem; }
+.portfolio-item { flex: 0 0 280px; height: 390px; }
+.portfolio-item.brand-square { flex: 0 0 280px; height: 280px; padding: 10px; border-radius: 15px; }
+.portfolio-container { padding: 0; gap: 15px; }
+.portfolio-section { padding: 60px 0 90px 0; scroll-margin-top: 60px; }
+.section-title { font-size: 1.5rem; padding: 0 15px; }
+.about-section { scroll-margin-top: 60px; }
+.lightbox { padding: 20px; }
+.close-btn { top: 15px; right: 25px; font-size: 2rem; }
+.nav-arrow { display: none; }
+.carousel-wrapper { padding: 0 20px; }
+.lightbox::before { width: 60%; height: 60%; }
+.lightbox-gallery-wrapper { max-width: 100%; }
+.lightbox-img { height: 60vh; width: 100%; object-fit: contain; }
+.lightbox-arrow { display: none; }
+.about-image { height: 250px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+<div class="navbar-logo">
+<img src="logo.png" alt="Pixel Estúdio Logo">
+</div>
+<ul class="navbar-menu">
+<li class="navbar-item"><a href="#logotipos">Logotipos</a></li>
+<li class="navbar-item"><a href="#artes">Posts de Artes</a></li>
+<li class="navbar-item"><a href="#sobre">O que é a Pixel</a></li>
+<li class="navbar-item"><a href="#historia">História da Pixel</a></li>
+<li class="navbar-item"><a href="#precos">Preços</a></li>
+</ul>
+<div class="navbar-phone">
+<a href="https://wa.me" target="_blank">+55 (11) 97879-2642</a>
+</div>
+</nav>
+
+<section class="header-banner">
+<a href="#logotipos" class="scroll-indicator" aria-label="Rolar para os Logotipos">&#8595;</a>
+</section>
+
+<!-- SEÇÃO 1: LOGOTIPOS -->
+<section class="portfolio-section" id="logotipos">
+<h2 class="section-title">Um pouco dos logotipos da pixel</h2>
+<div class="carousel-wrapper">
+<button class="nav-arrow left-arrow" onclick="document.getElementById('brand-track').scrollBy({left: -420, behavior: 'smooth'})">&#10094;</button>
+
+<div class="portfolio-container" id="brand-track">
+<a href="#img1" class="portfolio-item brand-square"><img src="logo1.jpg" alt="Óticas Oculare"></a>
+<a href="#img2" class="portfolio-item brand-square"><img src="logo2.jpg" alt="Vinysa Estúdio de Yoga"></a>
+<a href="#img3" class="portfolio-item brand-square"><img src="logo3.jpg" alt="Logotipo 3"></a>
+<a href="#img4" class="portfolio-item brand-square"><img src="logo4.jpg" alt="Luciano A. Camilo Advogado"></a>
+<!-- SEU NOVO LOGOTIPO ADICIONADO AQUI -->
+<a href="#img5" class="portfolio-item brand-square"><img src="logo5.jpg" alt="Novo Logotipo Pixel"></a>
+<a href="#img6" class="portfolio-item brand-square"><img src="logo6.jpg" alt="Logotipo 6 Pixel"></a>
+</div>
+
+<button class="nav-arrow right-arrow" onclick="document.getElementById('brand-track').scrollBy({left: 420, behavior: 'smooth'})">&#10095;</button>
+</div>
+<a href="#artes" class="scroll-indicator" aria-label="Rolar para os Posts de Artes">&#8595;</a>
+</section>
+
+
+<!-- SEÇÃO 2: POSTS DE ARTES -->
+<section class="portfolio-section" id="artes" style="background-color: #050505;">
+<h2 class="section-title">conheça um pouco das artes que a PIXEL produz</h2>
+<p class="section-subtitle">Clique nas artes para ver as imagens carrossel</p>
+<div class="carousel-wrapper">
+<button class="nav-arrow left-arrow" onclick="document.getElementById('art-track').scrollBy({left: -420, behavior: 'smooth'})">&#10094;</button>
+
+<div class="portfolio-container" id="art-track">
+<a href="#art1_a" class="portfolio-item"><img src="arte1.jpg" alt="Inês Godoy Fisioterapeuta - Acupuntura"></a>
+<a href="#art2_a" class="portfolio-item"><img src="arte2.jpg" alt="O que é Design Gráfico?"></a>
+<a href="#art3_a" class="portfolio-item"><img src="arte3.jpg" alt="Arte 3"></a>
+<!-- SUA NOVA ARTE ADICIONADA AQUI -->
+<a href="#art4_a" class="portfolio-item"><img src="arte4.jpg" alt="Nova Arte Pixel"></a>
+</div>
+
+<button class="nav-arrow right-arrow" onclick="document.getElementById('art-track').scrollBy({left: 420, behavior: 'smooth'})">&#10095;</button>
+</div>
+<a href="#sobre" class="scroll-indicator" aria-label="Rolar para o Quem Somos">&#8595;</a>
+</section>
+
+
+<!-- SEÇÃO 3: O QUE É A PIXEL? -->
+<section class="about-section" id="sobre">
+<a href="#pix_solo" class="about-image">
+<img src="logo_pixel_sobre.png" alt="Foto Institucional Pixel Estúdio">
+</a>
+<div class="about-text">
+<h2>O que é a PIXEL?</h2>
+<p>A Pixel é um estúdio de Design Gráfico especializada em logotipos e em artes de posts para redes sociais, mas que também realiza outros tipos de serviços como panfletos, banners, identidade visual e entre outros.</p>
+</div>
+</section>
+
+
+<!-- SEÇÃO 4: A HISTÓRIA DA PIXEL ESTÚDIO -->
+<section class="history-full-section" id="historia">
+<h2>A história da Pixel Estúdio</h2>
+<p>A Pixel veio de um jovem designer chamado Davi Godoy. A ideia surgiu quando Davi estava cursando design gráfico na Bio Artes, onde aprendeu a maior parte da criação de um logotipo. Mas antes de toda essa experiência com cursos, ele teve a oportunidade de criar thumbnails para vídeos no YouTube, onde obteve suas primeiras vivências com a criação e o marketing de artes para redes sociais.</p>
+<p style="margin-top: 18px;">Hoje, o Davi, com seus 16 anos, continua tendo a mesma sede de aprender e desenvolver suas habilidades no Design Gráfico.</p>
+</section>
+
+
+<!-- SEÇÃO 5: PREÇOS -->
+<section class="pricing-section" id="precos">
+<div class="pricing-container">
+<picture>
+<source media="(max-width: 768px)" srcset="tabela_precos_mobile.jpg">
+<img src="tabela_precos_pc.jpg" alt="Tabela de Preços Pixel Estúdio">
+</picture>
+</div>
+</section>
+
+
+<!-- 📞 SEÇÃO 6: CONTATO -->
+<section id="contato" style="padding: 80px 5%; text-align: center; background-color: #0a0a0a; border-top: 1px solid rgba(255, 255, 255, 0.03);">
+<h2 style="font-size: 2rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 15px; color: #f0f0f0;">Entre em Contato</h2>
+<p style="color: #999; font-size: 1.1rem; margin-bottom: 30px;">Está pronto para dar vida ao seu projeto? Fale comigo agora mesmo!</p>
+
+<!-- Botão Interativo do WhatsApp com Mensagem Personalizada -->
+<a href="https://wa.me"
+target="_blank"
+style="display: inline-flex; align-items: center; justify-content: center; background-color: #25D366; color: #fff; text-decoration: none; padding: 15px 35px; font-size: 1.1rem; font-weight: 600; border-radius: 50px; box-shadow: 0 10px 20px rgba(37, 211, 102, 0.2); transition: transform 0.3s ease, box-shadow 0.3s ease;">
+<span style="margin-right: 10px; font-size: 1.3rem;">💬</span> Chamar no WhatsApp
+</a>
+
+<p style="margin-top: 25px; color: #666; font-size: 0.9rem; letter-spacing: 0.5px;">Telefone direto: +55 (11) 97879-2642</p>
+</section>
+
+
+<!-- 🖼 CENTRAL DE LIGHTBOXES -->
+<div id="img1" class="lightbox"><a href="#logotipos" class="close-btn">&times;</a><img src="logo1.jpg" class="lightbox-img" alt="Óticas Oculare"></div>
+<div id="img2" class="lightbox"><a href="#logotipos" class="close-btn">&times;</a><img src="logo2.jpg" class="lightbox-img" alt="Vinysa"></div>
+<div id="img3" class="lightbox"><a href="#logotipos" class="close-btn">&times;</a><img src="logo3.jpg" class="lightbox-img" alt="Logo 3"></div>
+<div id="img4" class="lightbox"><a href="#logotipos" class="close-btn">&times;</a><img src="logo4.jpg" class="lightbox-img" alt="Luciano A. Camilo"></div>
+<!-- AMPLIÇÃO DO SEU NOVO LOGOTIPO 5 -->
+<div id="img5" class="lightbox"><a href="#logotipos" class="close-btn">&times;</a><img src="logo5.jpg" class="lightbox-img" alt="Novo Logotipo Ampliado"></div>
+<div id="img6" class="lightbox"><a href="#logotipos" class="close-btn">&times;</a><img src="logo6.jpg" class="lightbox-img" alt="Novo Logotipo 6 Ampliado"></div>
+
+<!-- CARROSSEL ARTE 1 -->
+<div id="art1_a" class="lightbox">
+<a href="#artes" class="close-btn">&times;</a>
+<div class="lightbox-gallery-wrapper">
+<div class="lightbox-gallery-container">
+<img src="arte1.jpg" class="lightbox-img" alt="Post 1">
+</div>
+<a href="#art1_b" class="lightbox-arrow r-arrow">&#10095;</a>
+</div>
+</div>
+<div id="art1_b" class="lightbox">
+<a href="#artes" class="close-btn">&times;</a>
+<div class="lightbox-gallery-wrapper">
+<a href="#art1_a" class="lightbox-arrow l-arrow">&#10094;</a>
+<div class="lightbox-gallery-container">
+<img src="arte1_b.jpg" class="lightbox-img" alt="Post 2">
+</div>
+<a href="#art1_c" class="lightbox-arrow r-arrow">&#10095;</a>
+</div>
+</div>
+<div id="art1_c" class="lightbox">
+<a href="#artes" class="close-btn">&times;</a>
+<div class="lightbox-gallery-wrapper">
+<a href="#art1_b" class="lightbox-arrow l-arrow">&#10094;</a>
+<div class="lightbox-gallery-container">
+<img src="arte1_c.jpg" class="lightbox-img" alt="Post 3">
+</div>
+<a href="#art1_d" class="lightbox-arrow r-arrow">&#10095;</a>
+</div>
+</div>
+<div id="art1_d" class="lightbox">
+<a href="#artes" class="close-btn">&times;</a>
+<div class="lightbox-gallery-wrapper">
+<a href="#art1_c" class="lightbox-arrow l-arrow">&#10094;</a>
+<div class="lightbox-gallery-container">
+<img src="arte1_d.jpg" class="lightbox-img" alt="Post 4">
+</div>
+</div>
+</div>
+
+<!-- CARROSSEL ARTE 2 -->
+<div id="art2_a" class="lightbox">
+<a href="#artes" class="close-btn">&times;</a>
+<div class="lightbox-gallery-wrapper">
+<div class="lightbox-gallery-container">
+<img src="arte2.jpg" class="lightbox-img" alt="Design Grafico Capa">
+</div>
+<a href="#art2_b" class="lightbox-arrow r-arrow">&#10095;</a>
+</div>
+</div>
+<div id="art2_b" class="lightbox">
+<a href="#artes" class="close-btn">&times;</a>
+<div class="lightbox-gallery-wrapper">
+<a href="#art2_a" class="lightbox-arrow l-arrow">&#10094;</a>
+<div class="lightbox-gallery-container">
+<img src="arte2_b.jpg" class="lightbox-img" alt="Design Grafico Suporte 1">
+</div>
+<a href="#art2_c" class="lightbox-arrow r-arrow">&#10095;</a>
+</div>
+</div>
+<div id="art2_c" class="lightbox">
+<a href="#artes" class="close-btn">&times;</a>
+<div class="lightbox-gallery-wrapper">
+<a href="#art2_b" class="lightbox-arrow l-arrow">&#10094;</a>
+<div class="lightbox-gallery-container">
+<img src="arte2_c.jpg" class="lightbox-img" alt="Design Grafico Suporte 2">
+</div>
+</div>
+</div>
+
+<!-- CARROSSEL ARTE 3 -->
+<div id="art3_a" class="lightbox">
+<a href="#artes" class="close-btn">&times;</a>
+<div class="lightbox-gallery-wrapper">
+<div class="lightbox-gallery-container">
+<img src="arte3.jpg" class="lightbox-img" alt="Arte 3 Capa">
+</div>
+<a href="#art3_b" class="lightbox-arrow r-arrow">&#10095;</a>
+</div>
+</div>
+<div id="art3_b" class="lightbox">
+<a href="#artes" class="close-btn">&times;</a>
+<div class="lightbox-gallery-wrapper">
+<a href="#art3_a" class="lightbox-arrow l-arrow">&#10094;</a>
+<div class="lightbox-gallery-container">
+<img src="arte3_b.jpg" class="lightbox-img" alt="Arte 3 Suporte 1">
+</div>
+<a href="#art3_c" class="lightbox-arrow r-arrow">&#10095;</a>
+</div>
+</div>
+<div id="art3_c" class="lightbox">
+<a href="#artes" class="close-btn">&times;</a>
+<div class="lightbox-gallery-wrapper">
+<a href="#art3_b" class="lightbox-arrow l-arrow">&#10094;</a>
+<div class="lightbox-gallery-container">
+<img src="arte3_c.jpg" class="lightbox-img" alt="Arte 3 Suporte 2">
+</div>
+</div>
+</div>
+
+<!--
