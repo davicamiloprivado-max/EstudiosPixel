@@ -363,7 +363,7 @@ transform: translate(-50%, -50%);
 width: 40%;
 height: 40%;
 background: url('logo.png') no-repeat center center/contain;
-opacity: 0.12;
+opacity: 100;
 filter: brightness(1) invert(0);
 mix-blend-mode: screen;
 pointer-events: none;
@@ -577,7 +577,7 @@ padding-bottom: 60px;
 <!-- SEÇÃO 2: POSTS DE ARTES -->
 <section class="portfolio-section" id="artes" style="background-color: #050505;">
 <h2 class="section-title">conheça um pouco das artes que a PIXEL produz</h2>
-<p class="section-subtitle">Clique nas artes para ver as imagens carrossel</p>
+<p class="section-subtitle">Clique nas artes para ver as imagens carrossel (Acesse no computador)</p>
 <div class="carousel-wrapper">
 <button class="nav-arrow left-arrow" onclick="document.getElementById('art-track').scrollBy({left: -420, behavior: 'smooth'})">&#10094;</button>
 
@@ -588,6 +588,7 @@ padding-bottom: 60px;
 <!-- SUA NOVA ARTE ADICIONADA AQUI -->
 <a href="#art4_a" class="portfolio-item"><img src="arte4.jpg" alt="Nova Arte Pixel"></a>
 <a href="#art5_a" class="portfolio-item"><img src="arte5.jpg" alt="Copa do mundo 1"></a>
+<a href="#art6_a" class="portfolio-item"><img src="arte6.jpg" alt="Flyer de curso Ines Godoy"></a>
 </div>
 
 <button class="nav-arrow right-arrow" onclick="document.getElementById('art-track').scrollBy({left: 420, behavior: 'smooth'})">&#10095;</button>
@@ -753,6 +754,16 @@ style="display: inline-flex; align-items: center; justify-content: center; backg
 </div>
 </div>
 
+<!-- CARROSSEL ARTE 4 -->
+<div id="art4_a" class="lightbox">
+<a href="#artes" class="close-btn">&times;</a>
+<div class="lightbox-gallery-wrapper">
+<div class="lightbox-gallery-container">
+<img src="arte4.jpg" class="lightbox-img" alt="Post 1">
+</div>
+</div>
+</div>
+
 <!-- CARROSSEL ARTE 5 -->
 <div id="art5_a" class="lightbox">
 <a href="#artes" class="close-btn">&times;</a>
@@ -793,4 +804,14 @@ style="display: inline-flex; align-items: center; justify-content: center; backg
 </div>
 </div>
 
+<!-- CARROSSEL ARTE 6 -->
+<div id="art6_a" class="lightbox">
+<a href="#artes" class="close-btn">&times;</a>
+<div class="lightbox-gallery-wrapper">
+<div class="lightbox-gallery-container">
+<img src="arte6.jpg" class="lightbox-img" alt="Post 1">
+</div>
+</div>
+</div>
+</div>
 <!--
