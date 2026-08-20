@@ -1,0 +1,1481 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel - Nosso Portfólio</title>
+
+    <style>
+        :root {
+            --menu-blue: #3b4ca8;
+            --card-gap: 22px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            min-width: 320px;
+            min-height: 100vh;
+            color: #fff;
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #020617;
+            background-image: url("fundoportfolio.jpg");
+            background-repeat: no-repeat;
+            background-position: top center;
+            background-size: 100% auto;
+            overflow-x: hidden;
+        }
+
+        /* NAVBAR */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 0 40px;
+            z-index: 100;
+        }
+
+        .logo-box {
+            position: relative;
+            z-index: 102;
+            width: 85px;
+            height: 95px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0 0 25px 25px;
+            background: #000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, .4);
+        }
+
+        .logo-box img,
+        .menu-open-logo img {
+            width: 50px;
+            height: auto;
+            display: block;
+        }
+
+        .menu-btn {
+            position: fixed;
+            top: 0;
+            right: 40px;
+            z-index: 110;
+            width: 85px;
+            height: 95px;
+            border: 0;
+            border-radius: 0 0 25px 25px;
+            background: #000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, .4);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            transition: background-color .3s ease, box-shadow .3s ease;
+        }
+
+        .menu-btn.active {
+            background: transparent;
+            box-shadow: none;
+        }
+
+        .menu-line {
+            width: 35px;
+            height: 3px;
+            border-radius: 2px;
+            background: #fff;
+            transition: transform .3s ease, opacity .3s ease;
+        }
+
+        .menu-btn.active .menu-line:nth-child(1) {
+            transform: translateY(10px) rotate(45deg);
+        }
+
+        .menu-btn.active .menu-line:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-btn.active .menu-line:nth-child(3) {
+            transform: translateY(-10px) rotate(-45deg);
+        }
+
+        .nav-menu {
+            position: fixed;
+            top: 0;
+            right: -105vw;
+            z-index: 105;
+            width: 100vw;
+            height: 100vh;
+            padding-left: 12%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            background: var(--menu-blue);
+            transition: right .4s ease;
+        }
+
+        .nav-menu.active {
+            right: 0;
+        }
+
+        .menu-open-logo {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+        }
+
+        .nav-links-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .nav-menu a {
+            color: #fff;
+            font-family: "Arial Narrow", Impact, sans-serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: 1px;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a:focus,
+        .nav-menu a:active {
+            text-decoration: underline;
+            text-underline-offset: 8px;
+            text-decoration-thickness: 3px;
+        }
+
+        /* ESTRUTURA DA PÁGINA */
+        main {
+            width: 100%;
+        }
+
+        .hero {
+            height: clamp(360px, 54.5vw, 760px);
+            padding: 90px 8% 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .hero-title {
+            position: relative;
+            top: -55px;
+            max-width: 950px;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(1.85rem, 4vw, 4.4rem);
+            line-height: .95;
+            text-transform: uppercase;
+            text-shadow: 0 8px 22px rgba(0, 0, 0, .38);
+        }
+
+        .portfolio-section {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* O título das logos foi descido e centralizado */
+        .logos-section {
+            min-height: clamp(430px, 58vw, 820px);
+            padding: clamp(72px, 10.5vw, 145px) 5% 60px;
+        }
+
+        /* Mantém a seção de artes mais abaixo, como na referência */
+        .arts-section {
+            min-height: clamp(680px, 104vw, 1390px);
+            padding: clamp(145px, 29vw, 360px) 5% 80px;
+        }
+
+        .section-title {
+            font-family: Impact, "Arial Narrow", Arial, sans-serif;
+            font-size: clamp(2.2rem, 5vw, 5rem);
+            line-height: 1;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .section-subtitle {
+            margin-top: 6px;
+            color: rgba(255, 255, 255, .72);
+            font-family: "Arial Narrow", Arial, sans-serif;
+            font-size: clamp(.78rem, 1.4vw, 1.25rem);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* CARROSSEL ESTILO NETFLIX */
+        .carousel {
+            position: relative;
+            width: min(1100px, 94vw);
+            margin-top: 46px;
+        }
+
+        .logos-carousel {
+            width: min(920px, 90vw);
+        }
+
+        .carousel-viewport {
+            width: 100%;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 10px 5px 22px;
+            scroll-behavior: smooth;
+            scroll-snap-type: x proximity;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            touch-action: pan-y;
+            overscroll-behavior-x: contain;
+        }
+
+        .carousel-viewport::-webkit-scrollbar {
+            display: none;
+        }
+
+        .carousel-track {
+            display: flex;
+            gap: var(--card-gap);
+            width: max-content;
+        }
+
+        .portfolio-card {
+            position: relative;
+            touch-action: pan-y;
+            flex: 0 0 auto;
+            overflow: hidden;
+            background: #fff;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, .2);
+            cursor: pointer;
+            scroll-snap-align: start;
+            transition: transform .25s ease, box-shadow .25s ease;
+        }
+
+        /* Logos: quadrados menores */
+        .logo-card {
+            width: clamp(225px, 27vw, 285px);
+            aspect-ratio: 1 / 1;
+            border-radius: 24px;
+        }
+
+        /* Artes: retângulos verticais */
+        .art-card {
+            width: clamp(255px, 30vw, 335px);
+            aspect-ratio: 3 / 4;
+            border-radius: 26px;
+        }
+
+        @media (hover: hover) and (pointer: fine) {
+            .portfolio-card:hover {
+                z-index: 3;
+                transform: scale(1.08);
+                box-shadow: 0 22px 45px rgba(0, 0, 0, .48);
+            }
+        }
+
+        .portfolio-card:active {
+            transform: scale(1.025);
+        }
+
+        .portfolio-card img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+            cursor: zoom-in;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+
+        .portfolio-card.image-missing img {
+            display: none;
+        }
+
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            z-index: 6;
+            width: 42px;
+            height: 76px;
+            border: 0;
+            border-radius: 6px;
+            color: #fff;
+            background: rgba(45, 45, 45, .72);
+            font-size: 3rem;
+            line-height: 1;
+            cursor: pointer;
+            transform: translateY(-50%);
+            transition: background-color .2s ease, transform .2s ease, opacity .2s ease;
+        }
+
+        .carousel-arrow:hover {
+            background: rgba(25, 25, 25, .94);
+        }
+
+        .carousel-arrow:disabled {
+            opacity: .28;
+            cursor: default;
+            pointer-events: none;
+        }
+
+        .carousel-arrow:active {
+            transform: translateY(-50%) scale(.94);
+        }
+
+        .carousel-arrow.prev {
+            left: -13px;
+        }
+
+        .carousel-arrow.next {
+            right: -13px;
+        }
+
+        /* INCLUSIVE reposicionado mais abaixo */
+        .inclusive-section {
+            min-height: clamp(600px, 73vw, 1050px);
+            padding: clamp(78px, 9vw, 145px) 8% 70px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .inclusive-title {
+            font-family: Impact, "Arial Narrow", Arial, sans-serif;
+            font-size: clamp(3rem, 7vw, 7rem);
+            line-height: 1;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .inclusive-text {
+            margin-top: auto;
+            margin-bottom: clamp(60px, 9vw, 140px);
+            font-family: "Arial Narrow", Arial, sans-serif;
+            font-size: clamp(1.35rem, 2.7vw, 2.7rem);
+            line-height: 1.35;
+            text-transform: uppercase;
+        }
+
+        footer {
+            position: relative;
+            z-index: 5;
+            width: 100%;
+            min-height: 260px;
+            margin-top: -2px;
+            padding: 65px 20px 42px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-family: "Arial Narrow", Arial, sans-serif;
+            background:
+                linear-gradient(
+                    to bottom,
+                    rgba(0, 0, 0, .82) 0%,
+                    #000000 24%,
+                    #000000 100%
+                );
+            box-shadow: 0 -35px 60px rgba(0, 0, 0, .72);
+        }
+
+        footer::before {
+            content: "";
+            position: absolute;
+            top: -70px;
+            left: 0;
+            width: 100%;
+            height: 72px;
+            pointer-events: none;
+            background: linear-gradient(
+                to bottom,
+                rgba(0, 0, 0, 0),
+                rgba(0, 0, 0, .96)
+            );
+        }
+
+        footer a {
+            position: relative;
+            z-index: 1;
+            color: #fff;
+            font-size: clamp(1rem, 1.5vw, 1.35rem);
+            font-weight: 600;
+            line-height: 1.45;
+            letter-spacing: .3px;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+            text-underline-offset: 4px;
+        }
+
+        .copyright {
+            position: relative;
+            z-index: 1;
+            margin-top: 10px;
+            color: rgba(255, 255, 255, .72);
+            font-size: clamp(.72rem, 1vw, .9rem);
+            letter-spacing: .2px;
+        }
+
+        /* VISUALIZAÇÃO AMPLIADA */
+        .image-modal {
+            position: fixed;
+            inset: 0;
+            z-index: 220;
+            padding: 20px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, .96);
+            backdrop-filter: blur(6px);
+        }
+
+        .image-modal.active {
+            display: flex;
+            animation: modalFade .22s ease;
+        }
+
+        .modal-image-box {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            max-width: 96vw;
+            max-height: 94vh;
+        }
+
+        .modal-image {
+            cursor: zoom-out;
+            width: auto;
+            height: auto;
+            max-width: 96vw;
+            max-height: 94vh;
+            border-radius: 16px;
+            object-fit: contain;
+            background: #fff;
+            box-shadow: 0 24px 70px rgba(0, 0, 0, .65);
+            animation: imageZoom .28s ease;
+        }
+
+        .modal-watermark {
+            position: absolute;
+            right: clamp(12px, 2vw, 26px);
+            bottom: clamp(12px, 2vw, 26px);
+            width: clamp(72px, 13vw, 145px);
+            height: auto;
+            opacity: .38;
+            pointer-events: none;
+            user-select: none;
+            -webkit-user-drag: none;
+            filter: drop-shadow(0 3px 9px rgba(0, 0, 0, .5));
+        }
+
+        .modal-close {
+            position: fixed;
+            top: 18px;
+            right: 22px;
+            z-index: 225;
+            width: 52px;
+            height: 52px;
+            border: 0;
+            border-radius: 50%;
+            color: #fff;
+            background: rgba(59, 76, 168, .96);
+            font-size: 2.2rem;
+            line-height: 1;
+            cursor: pointer;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, .4);
+            transition: transform .2s ease, background-color .2s ease;
+        }
+
+        .modal-close:hover {
+            transform: scale(1.08);
+            background: #4b5fc0;
+        }
+
+        .modal-navigation {
+            position: fixed;
+            top: 50%;
+            z-index: 225;
+            width: 54px;
+            height: 92px;
+            border: 0;
+            border-radius: 8px;
+            color: #fff;
+            background: rgba(35, 35, 35, .72);
+            font-size: 3.4rem;
+            line-height: 1;
+            cursor: pointer;
+            transform: translateY(-50%);
+            transition: background-color .2s ease, opacity .2s ease;
+        }
+
+        .modal-navigation:hover {
+            background: rgba(20, 20, 20, .95);
+        }
+
+        .modal-navigation:disabled {
+            opacity: .28;
+            cursor: default;
+            pointer-events: none;
+        }
+
+        .modal-navigation.prev {
+            left: 22px;
+        }
+
+        .modal-navigation.next {
+            right: 22px;
+        }
+
+        .modal-navigation[hidden] {
+            display: none;
+        }
+
+        .modal-counter {
+            position: fixed;
+            left: 50%;
+            bottom: 22px;
+            z-index: 225;
+            padding: 8px 14px;
+            border-radius: 999px;
+            background: rgba(0, 0, 0, .62);
+            color: #fff;
+            font-size: .95rem;
+            transform: translateX(-50%);
+        }
+
+        .modal-counter[hidden] {
+            display: none;
+        }
+
+        @keyframes modalFade {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes imageZoom {
+            from {
+                opacity: 0;
+                transform: scale(.86);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(22px);
+            transition: opacity .8s ease, transform .8s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+
+        @media (min-width: 769px) and (max-width: 1100px) {
+            header {
+                padding: 0 26px;
+            }
+
+            .menu-btn {
+                right: 26px;
+            }
+
+            .nav-menu {
+                padding-left: 9%;
+            }
+
+            .nav-menu a {
+                font-size: clamp(2.7rem, 5vw, 3.4rem);
+            }
+
+            .hero {
+                height: clamp(440px, 58vw, 640px);
+            }
+
+            .hero-title {
+                font-size: clamp(2.2rem, 5vw, 3.6rem);
+            }
+
+            .logos-section {
+                min-height: 650px;
+                padding-top: 110px;
+            }
+
+            .arts-section {
+                min-height: 980px;
+                padding-top: 245px;
+            }
+
+            .carousel,
+            .logos-carousel {
+                width: 92vw;
+            }
+
+            .logo-card {
+                width: clamp(250px, 39vw, 330px);
+            }
+
+            .art-card {
+                width: clamp(285px, 42vw, 355px);
+            }
+
+            .carousel-arrow.prev {
+                left: -5px;
+            }
+
+            .carousel-arrow.next {
+                right: -5px;
+            }
+
+            .inclusive-section {
+                min-height: 760px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            :root {
+                --card-gap: 12px;
+            }
+
+            header {
+                padding: 0 18px;
+            }
+
+            .logo-box,
+            .menu-btn {
+                width: 70px;
+                height: 78px;
+                border-radius: 0 0 21px 21px;
+            }
+
+            .logo-box img,
+            .menu-open-logo img {
+                width: 42px;
+            }
+
+            .menu-btn {
+                right: 18px;
+            }
+
+            .menu-open-logo {
+                top: 28px;
+                left: 24px;
+            }
+
+            .nav-menu {
+                padding-left: 8%;
+            }
+
+            .nav-menu a {
+                font-size: 2.25rem;
+            }
+
+            .hero {
+                height: auto;
+                min-height: 390px;
+                padding: 105px 7% 45px;
+            }
+
+            .hero-title {
+                top: -26px;
+                max-width: 390px;
+                font-size: clamp(1.55rem, 8vw, 2.15rem);
+                line-height: 1;
+            }
+
+            .logos-section {
+                min-height: 600px;
+                padding: 80px 3% 70px;
+            }
+
+            .arts-section {
+                min-height: 900px;
+                padding: 190px 3% 80px;
+            }
+
+            .section-title {
+                font-size: 2.25rem;
+                letter-spacing: 1px;
+            }
+
+            .section-subtitle {
+                font-size: .75rem;
+            }
+
+            .carousel {
+                width: 96vw;
+                margin-top: 38px;
+            }
+
+            .logos-carousel {
+                width: 96vw;
+            }
+
+            .carousel-viewport {
+                padding-left: 10vw;
+                padding-right: 10vw;
+                scroll-padding-left: 10vw;
+            }
+
+            .logo-card {
+                width: min(74vw, 310px);
+                border-radius: 20px;
+            }
+
+            .art-card {
+                width: min(76vw, 330px);
+                border-radius: 22px;
+            }
+
+            .carousel-arrow {
+                width: 26px;
+                height: 66px;
+                font-size: 2.5rem;
+            }
+
+            .carousel-arrow.prev {
+                left: 3px;
+            }
+
+            .carousel-arrow.next {
+                right: 3px;
+            }
+
+            .inclusive-section {
+                min-height: 650px;
+                padding: 90px 7% 60px;
+            }
+
+            .inclusive-title {
+                font-size: 3rem;
+            }
+
+            .inclusive-text {
+                margin-bottom: 7vw;
+                font-size: 1.45rem;
+            }
+
+            footer {
+                min-height: 185px;
+            }
+
+            .modal-navigation {
+                width: 42px;
+                height: 76px;
+                font-size: 2.7rem;
+            }
+
+            .modal-navigation.prev {
+                left: 8px;
+            }
+
+            .modal-navigation.next {
+                right: 8px;
+            }
+        }
+
+
+        @media (max-width: 768px) {
+            body {
+                background-image: url("fundoportfolio.jpg");
+                background-position: top center;
+                background-repeat: no-repeat;
+                background-size: 100% 100%;
+                background-attachment: scroll;
+            }
+
+            header {
+                padding: 0 14px;
+            }
+
+            .logo-box,
+            .menu-btn {
+                width: 66px;
+                height: 74px;
+                border-radius: 0 0 20px 20px;
+                background: rgba(0, 0, 0, .92);
+                box-shadow: 0 6px 18px rgba(0, 0, 0, .38);
+                backdrop-filter: blur(7px);
+            }
+
+            .logo-box img,
+            .menu-open-logo img {
+                width: 40px;
+            }
+
+            .menu-btn {
+                right: 14px;
+                gap: 6px;
+            }
+
+            .menu-line {
+                width: 29px;
+                height: 3px;
+            }
+
+            .menu-btn.active {
+                background: rgba(0, 0, 0, .18);
+                box-shadow: none;
+                border-radius: 0 0 20px 20px;
+            }
+
+            .nav-menu {
+                right: -110vw;
+                padding: 105px 22px 42px;
+                align-items: center;
+                justify-content: center;
+                background:
+                    radial-gradient(circle at top left, rgba(255,255,255,.10), transparent 34%),
+                    linear-gradient(165deg, #4357b6 0%, #33469d 52%, #26357c 100%);
+            }
+
+            .nav-menu.active {
+                right: 0;
+            }
+
+            .menu-open-logo {
+                top: 26px;
+                left: 50%;
+                width: 66px;
+                height: 66px;
+                border-radius: 22px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: rgba(0, 0, 0, .86);
+                box-shadow: 0 8px 22px rgba(0, 0, 0, .3);
+                transform: translateX(-50%);
+            }
+
+            .nav-links-container {
+                width: min(100%, 410px);
+                gap: 0;
+                border-top: 1px solid rgba(255, 255, 255, .18);
+                border-bottom: 1px solid rgba(255, 255, 255, .18);
+            }
+
+            .nav-menu a {
+                width: 100%;
+                padding: 18px 10px;
+                border-bottom: 1px solid rgba(255, 255, 255, .14);
+                font-family: "Arial Narrow", Impact, sans-serif;
+                font-size: clamp(1.9rem, 9vw, 2.55rem);
+                line-height: 1.05;
+                letter-spacing: .6px;
+                text-align: center;
+                text-decoration: none;
+                transition:
+                    background-color .22s ease,
+                    transform .22s ease,
+                    letter-spacing .22s ease;
+            }
+
+            .nav-menu a:last-child {
+                border-bottom: 0;
+            }
+
+            .nav-menu a:hover,
+            .nav-menu a:focus,
+            .nav-menu a:active {
+                border-radius: 12px;
+                background: rgba(255, 255, 255, .09);
+                text-decoration: none;
+                letter-spacing: 1.3px;
+                transform: scale(1.025);
+            }
+
+            footer {
+                min-height: 225px;
+                margin-top: -2px;
+                padding: 62px 18px 36px;
+                background:
+                    linear-gradient(
+                        to bottom,
+                        rgba(0, 0, 0, .9) 0%,
+                        #000000 20%,
+                        #000000 100%
+                    );
+                box-shadow: 0 -32px 55px rgba(0, 0, 0, .78);
+            }
+
+            footer::before {
+                top: -62px;
+                height: 64px;
+            }
+
+            footer a {
+                font-size: 1rem;
+                line-height: 1.5;
+            }
+
+            .copyright {
+                max-width: 290px;
+                margin-top: 9px;
+                font-size: .72rem;
+                line-height: 1.4;
+            }
+        }
+
+        @media (max-width: 520px) {
+            .logos-section {
+                min-height: 560px;
+            }
+
+            .arts-section {
+                min-height: 840px;
+                padding-top: 170px;
+            }
+
+            .inclusive-section {
+                min-height: 620px;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .inclusive-title {
+                font-size: 2.7rem;
+            }
+        }
+    
+        @media (max-width: 768px) {
+            .modal-image-box {
+                max-width: 94vw;
+                max-height: 84vh;
+            }
+
+            .modal-image {
+                max-width: 94vw;
+                max-height: 84vh;
+            }
+
+            .modal-watermark {
+                right: 10px;
+                bottom: 10px;
+                width: clamp(58px, 19vw, 95px);
+                opacity: .36;
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="logo-box">
+            <img src="coroaba.jpg" alt="Logo Pixel">
+        </div>
+    </header>
+
+    <button class="menu-btn" id="menuBtn" type="button" aria-label="Abrir menu" aria-expanded="false">
+        <span class="menu-line"></span>
+        <span class="menu-line"></span>
+        <span class="menu-line"></span>
+    </button>
+
+    <nav class="nav-menu" id="navMenu">
+        <div class="menu-open-logo">
+            <img src="coroaba.jpg" alt="Logo Pixel">
+        </div>
+
+        <div class="nav-links-container">
+            <a href="portfolio.html">Nosso Portfólio</a>
+            <a href="index.html#sobre">Sobre Nós</a>
+            <a href="index.html#servicos">Serviços</a>
+            <a href="contato.html">Entre em contato</a>
+        </div>
+    </nav>
+
+    <main>
+        <section class="hero">
+            <h1 class="hero-title reveal">Transformando empresas<br>em marcas</h1>
+        </section>
+
+        <section class="portfolio-section logos-section">
+            <h2 class="section-title reveal">Nossas Logotipos</h2>
+            <p class="section-subtitle reveal">Clique para ter uma visualização melhor</p>
+
+            <div class="carousel logos-carousel reveal" data-carousel>
+                <button class="carousel-arrow prev" type="button" aria-label="Logos anteriores">‹</button>
+
+                <div class="carousel-viewport">
+                    <div class="carousel-track">
+                        <article class="portfolio-card logo-card"><img src="logo1.jpg" alt="Logo 1"></article>
+                        <article class="portfolio-card logo-card"><img src="logo2.jpg" alt="Logo 2"></article>
+                        <article class="portfolio-card logo-card"><img src="logo3.jpg" alt="Logo 3"></article>
+                        <article class="portfolio-card logo-card"><img src="logo4.jpg" alt="Logo 4"></article>
+                        <article class="portfolio-card logo-card"><img src="logo5.jpg" alt="Logo 5"></article>
+                        <article class="portfolio-card logo-card"><img src="logo6.jpg" alt="Logo 6"></article>
+                        <article class="portfolio-card logo-card"><img src="logo7.jpg" alt="Logo 7"></article>
+                    </div>
+                </div>
+
+                <button class="carousel-arrow next" type="button" aria-label="Próximas logos">›</button>
+            </div>
+        </section>
+
+        <section class="portfolio-section arts-section">
+            <h2 class="section-title reveal">Um pouco das nossas artes</h2>
+            <p class="section-subtitle reveal">Clique para ver o carrossel (Melhor vizualição no comuputador)</p>
+
+            <div class="carousel reveal" data-carousel>
+                <button class="carousel-arrow prev" type="button" aria-label="Artes anteriores">‹</button>
+
+                <div class="carousel-viewport">
+                    <div class="carousel-track">
+                        <article class="portfolio-card art-card"><img src="arte1.jpg" alt="Arte 1"></article>
+                        <article class="portfolio-card art-card"><img src="arte2.jpg" alt="Arte 2"></article>
+                        <article class="portfolio-card art-card"><img src="arte3.jpg" alt="Arte 3"></article>
+                        <article class="portfolio-card art-card"><img src="arte4.jpg" alt="Arte 4"></article>
+                        <article class="portfolio-card art-card"><img src="arte5.jpg" alt="Arte 5"></article>
+                        <article class="portfolio-card art-card"><img src="arte6.jpg" alt="Arte 6"></article>
+                    </div>
+                </div>
+
+                <button class="carousel-arrow next" type="button" aria-label="Próximas artes">›</button>
+            </div>
+        </section>
+
+        <section class="inclusive-section">
+            <h2 class="inclusive-title reveal">Inclusive...</h2>
+
+            <p class="inclusive-text reveal">
+                O layout desse site<br>
+                foi desenvolvido pela Pixel
+            </p>
+        </section>
+    </main>
+
+    <footer>
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=estudiospixelsoficial@gmail.com"
+           target="_blank"
+           rel="noopener noreferrer">
+            estudiospixelsoficial@gmail.com
+        </a>
+        <a href="#" aria-label="Instagram da Pixel">@estudiospixeloficial</a>
+        <p class="copyright">© 2026 Pixel Estúdio. Todos os direitos reservados.</p>
+    </footer>
+
+    <div class="image-modal" id="imageModal" aria-hidden="true">
+        <button class="modal-close" id="modalClose" type="button" aria-label="Fechar">&times;</button>
+
+        <button class="modal-navigation prev" id="modalPrevious" type="button"
+                aria-label="Imagem anterior" hidden>‹</button>
+
+        <div class="modal-image-box">
+            <img class="modal-image" id="modalImage" src="" alt="Visualização ampliada">
+            <img class="modal-watermark" src="coroaba.jpg" alt="" aria-hidden="true">
+        </div>
+
+        <button class="modal-navigation next" id="modalNext" type="button"
+                aria-label="Próxima imagem" hidden>›</button>
+
+        <div class="modal-counter" id="modalCounter" hidden></div>
+    </div>
+
+    <script>
+        const menuBtn = document.getElementById("menuBtn");
+        const navMenu = document.getElementById("navMenu");
+
+        menuBtn.addEventListener("click", () => {
+            const active = menuBtn.classList.toggle("active");
+            navMenu.classList.toggle("active");
+            menuBtn.setAttribute("aria-expanded", active ? "true" : "false");
+            document.body.style.overflow = active ? "hidden" : "";
+        });
+
+        document.querySelectorAll(".nav-menu a").forEach(link => {
+            link.addEventListener("click", () => {
+                menuBtn.classList.remove("active");
+                navMenu.classList.remove("active");
+                menuBtn.setAttribute("aria-expanded", "false");
+                document.body.style.overflow = "";
+            });
+        });
+
+        /* Oculta o ícone de imagem quebrada enquanto os arquivos ainda não estiverem na pasta */
+        document.querySelectorAll(".portfolio-card img").forEach(image => {
+            image.addEventListener("error", () => {
+                image.parentElement.classList.add("image-missing");
+            });
+
+            image.addEventListener("load", () => {
+                image.parentElement.classList.remove("image-missing");
+            });
+        });
+
+        /* Carrossel principal no estilo Netflix, sem voltar sozinho ao início */
+        document.querySelectorAll("[data-carousel]").forEach(carousel => {
+            const viewport = carousel.querySelector(".carousel-viewport");
+            const track = carousel.querySelector(".carousel-track");
+            const previousButton = carousel.querySelector(".prev");
+            const nextButton = carousel.querySelector(".next");
+
+            let pointerDown = false;
+            let startX = 0;
+            let initialScroll = 0;
+            let dragged = false;
+
+            function scrollDistance() {
+                const firstCard = track.querySelector(".portfolio-card");
+                if (!firstCard) return viewport.clientWidth;
+
+                const styles = getComputedStyle(track);
+                const gap = parseFloat(styles.gap) || 0;
+                const cardsPerPage =
+                    window.innerWidth <= 768 ? 1 :
+                    window.innerWidth <= 1100 ? 2 : 3;
+
+                return (firstCard.getBoundingClientRect().width + gap) * cardsPerPage;
+            }
+
+            function updateButtons() {
+                const atStart = viewport.scrollLeft <= 4;
+                const atEnd =
+                    viewport.scrollLeft + viewport.clientWidth >=
+                    viewport.scrollWidth - 4;
+
+                previousButton.disabled = atStart;
+                nextButton.disabled = atEnd;
+            }
+
+            nextButton.addEventListener("click", event => {
+                event.preventDefault();
+                event.stopPropagation();
+
+                const maximumScroll =
+                    Math.max(0, viewport.scrollWidth - viewport.clientWidth);
+
+                const targetScroll =
+                    Math.min(maximumScroll, viewport.scrollLeft + scrollDistance());
+
+                viewport.scrollTo({
+                    left: targetScroll,
+                    behavior: "smooth"
+                });
+            });
+
+            previousButton.addEventListener("click", event => {
+                event.preventDefault();
+                event.stopPropagation();
+
+                const targetScroll =
+                    Math.max(0, viewport.scrollLeft - scrollDistance());
+
+                viewport.scrollTo({
+                    left: targetScroll,
+                    behavior: "smooth"
+                });
+            });
+
+            viewport.addEventListener("pointerdown", event => {
+                pointerDown = true;
+                dragged = false;
+                startX = event.clientX;
+                initialScroll = viewport.scrollLeft;
+                viewport.dataset.wasDragged = "false";
+            });
+
+            viewport.addEventListener("pointermove", event => {
+                if (!pointerDown) return;
+
+                const movement = event.clientX - startX;
+
+                if (Math.abs(movement) > 10) {
+                    dragged = true;
+                    viewport.dataset.wasDragged = "true";
+                    viewport.scrollLeft = initialScroll - movement;
+                }
+            });
+
+            viewport.addEventListener("pointerup", () => {
+                pointerDown = false;
+
+                setTimeout(() => {
+                    viewport.dataset.wasDragged = "false";
+                }, 120);
+            });
+
+            viewport.addEventListener("pointercancel", () => {
+                pointerDown = false;
+                dragged = false;
+                viewport.dataset.wasDragged = "false";
+            });
+
+            viewport.addEventListener("scroll", updateButtons, { passive: true });
+            window.addEventListener("resize", updateButtons);
+
+            updateButtons();
+        });
+
+        /* Visualização ampliada com carrossel interno para artes com várias imagens */
+        const imageModal = document.getElementById("imageModal");
+        const modalImage = document.getElementById("modalImage");
+        const modalClose = document.getElementById("modalClose");
+        const modalPrevious = document.getElementById("modalPrevious");
+        const modalNext = document.getElementById("modalNext");
+        const modalCounter = document.getElementById("modalCounter");
+
+        let modalGallery = [];
+        let modalIndex = 0;
+        let savedViewport = null;
+        let savedViewportScroll = 0;
+        let galleryRequest = 0;
+
+        function imageExists(src) {
+            return new Promise(resolve => {
+                const testImage = new Image();
+
+                testImage.onload = () => resolve(src);
+                testImage.onerror = () => resolve(null);
+                testImage.src = src;
+            });
+        }
+
+        async function discoverArtGallery(image) {
+            const primarySource = image.getAttribute("src");
+
+            if (!primarySource) return [];
+
+            const match = primarySource.match(/^(.*?)(\.[^.]+)$/);
+
+            if (!match) return [primarySource];
+
+            const baseName = match[1];
+            const extension = match[2];
+            const candidates = [primarySource];
+
+            /*
+             * Para colocar várias imagens dentro de uma arte, use:
+             * arte1.jpg, arte1-2.jpg, arte1-3.jpg...
+             * O mesmo vale para arte2, arte3 e assim por diante.
+             */
+            for (let number = 2; number <= 12; number += 1) {
+                candidates.push(`${baseName}-${number}${extension}`);
+            }
+
+            const results = await Promise.all(candidates.map(imageExists));
+            return results.filter(Boolean);
+        }
+
+        function updateModalImage() {
+            if (!modalGallery.length) return;
+
+            modalImage.src = modalGallery[modalIndex];
+            modalImage.alt = `Visualização ${modalIndex + 1} de ${modalGallery.length}`;
+
+            const hasGallery = modalGallery.length > 1;
+
+            modalPrevious.hidden = !hasGallery;
+            modalNext.hidden = !hasGallery;
+            modalCounter.hidden = !hasGallery;
+
+            if (hasGallery) {
+                modalPrevious.disabled = modalIndex === 0;
+                modalNext.disabled = modalIndex === modalGallery.length - 1;
+                modalCounter.textContent = `${modalIndex + 1} / ${modalGallery.length}`;
+            } else {
+                modalPrevious.disabled = true;
+                modalNext.disabled = true;
+            }
+        }
+
+        function keepMainCarouselPosition() {
+            if (!savedViewport) return;
+
+            requestAnimationFrame(() => {
+                savedViewport.scrollLeft = savedViewportScroll;
+            });
+        }
+
+        function openModalWithGallery(gallery, sourceViewport) {
+            modalGallery = gallery.length ? gallery : [];
+            modalIndex = 0;
+            savedViewport = sourceViewport;
+            savedViewportScroll = sourceViewport ? sourceViewport.scrollLeft : 0;
+
+            if (!modalGallery.length) return;
+
+            updateModalImage();
+            imageModal.classList.add("active");
+            imageModal.setAttribute("aria-hidden", "false");
+
+            /* Não altera o overflow do body, para o carrossel não mudar de posição. */
+            keepMainCarouselPosition();
+        }
+
+        async function openCard(card) {
+            const image = card.querySelector("img");
+
+            if (!image || !image.complete || image.naturalWidth <= 0) return;
+
+            const viewport = card.closest(".carousel-viewport");
+            const requestId = ++galleryRequest;
+            const primarySource = image.getAttribute("src");
+
+            /* Abre imediatamente a imagem principal. */
+            openModalWithGallery([primarySource], viewport);
+
+            if (!card.classList.contains("art-card")) return;
+
+            const gallery = await discoverArtGallery(image);
+
+            if (requestId !== galleryRequest || !imageModal.classList.contains("active")) {
+                return;
+            }
+
+            modalGallery = gallery.length ? gallery : [primarySource];
+            modalIndex = 0;
+            updateModalImage();
+            keepMainCarouselPosition();
+        }
+
+        document.querySelectorAll(".portfolio-card").forEach(card => {
+            card.setAttribute("tabindex", "0");
+
+            card.addEventListener("click", event => {
+                const viewport = card.closest(".carousel-viewport");
+
+                if (viewport && viewport.dataset.wasDragged === "true") {
+                    event.preventDefault();
+                    return;
+                }
+
+                event.preventDefault();
+                openCard(card);
+            });
+
+            card.addEventListener("keydown", event => {
+                if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    openCard(card);
+                }
+            });
+        });
+
+        function showPreviousModalImage() {
+            if (modalGallery.length <= 1 || modalIndex <= 0) return;
+
+            modalIndex -= 1;
+            updateModalImage();
+        }
+
+        function showNextModalImage() {
+            if (
+                modalGallery.length <= 1 ||
+                modalIndex >= modalGallery.length - 1
+            ) {
+                return;
+            }
+
+            modalIndex += 1;
+            updateModalImage();
+        }
+
+        function closeImageModal() {
+            galleryRequest += 1;
+            imageModal.classList.remove("active");
+            imageModal.setAttribute("aria-hidden", "true");
+            modalImage.src = "";
+            modalGallery = [];
+            modalIndex = 0;
+            modalPrevious.hidden = true;
+            modalNext.hidden = true;
+            modalPrevious.disabled = true;
+            modalNext.disabled = true;
+            modalCounter.hidden = true;
+
+            keepMainCarouselPosition();
+        }
+
+        modalPrevious.addEventListener("click", event => {
+            event.stopPropagation();
+            showPreviousModalImage();
+        });
+
+        modalNext.addEventListener("click", event => {
+            event.stopPropagation();
+            showNextModalImage();
+        });
+
+        modalClose.addEventListener("click", event => {
+            event.stopPropagation();
+            closeImageModal();
+        });
+
+        imageModal.addEventListener("click", event => {
+            if (event.target === imageModal) {
+                closeImageModal();
+            }
+        });
+
+        imageModal.addEventListener("wheel", event => {
+            event.preventDefault();
+        }, { passive: false });
+
+        imageModal.addEventListener("touchmove", event => {
+            event.preventDefault();
+        }, { passive: false });
+
+        document.addEventListener("keydown", event => {
+            if (event.key === "Escape") {
+                closeImageModal();
+                menuBtn.classList.remove("active");
+                navMenu.classList.remove("active");
+                document.body.style.overflow = "";
+            }
+
+            if (imageModal.classList.contains("active")) {
+                if (event.key === "ArrowLeft") {
+                    showPreviousModalImage();
+                }
+
+                if (event.key === "ArrowRight") {
+                    showNextModalImage();
+                }
+            }
+        });
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("visible");
+                }
+            });
+        }, {
+            threshold: .1
+        });
+
+        document.querySelectorAll(".reveal").forEach(element => {
+            observer.observe(element);
+        });
+    </script>
+</body>
+</html>
